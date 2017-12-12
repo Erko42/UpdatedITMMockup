@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Eriks UpdatedITMMockup</string>
+    <string name="title_activity_exhibitor_listbs">ExhibitorListbs</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_exhibitor_listsbs">ExhibitorListsbs</string>
+    <string name="download_data_text">Downloading Data...</string>
+    <string name="it_may_take_a_while">It may take a while to\ndownload all the information</string>
+</resources>
