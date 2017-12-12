@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Interfaces;
+package com.example.eriko.updateditmmockup.interfaces;
 
 import org.json.JSONObject;
 

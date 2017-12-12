@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Fragments;
+package com.example.eriko.updateditmmockup.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

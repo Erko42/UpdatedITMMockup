@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Classes;
+package com.example.eriko.updateditmmockup.classes;
 
 import android.Manifest;
 import android.os.Bundle;

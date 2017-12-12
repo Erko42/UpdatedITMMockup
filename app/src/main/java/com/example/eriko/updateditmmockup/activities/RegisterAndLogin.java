@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Activities;
+package com.example.eriko.updateditmmockup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import com.example.eriko.updateditmmockup.R;
 
 public class RegisterAndLogin extends AppCompatActivity {
 
+    private final String TAG = this.getClass().getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

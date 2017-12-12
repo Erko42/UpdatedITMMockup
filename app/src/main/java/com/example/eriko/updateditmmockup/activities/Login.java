@@ -1,21 +1,25 @@
-package com.example.eriko.updateditmmockup.Activities;
+package com.example.eriko.updateditmmockup.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.eriko.updateditmmockup.Classes.User;
-import com.example.eriko.updateditmmockup.Helpers.DatabaseHelper;
+import com.example.eriko.updateditmmockup.classes.User;
+import com.example.eriko.updateditmmockup.helpers.DatabaseHelper;
 import com.example.eriko.updateditmmockup.R;
+
+import java.util.ArrayList;
 
 public class Login extends AppCompatActivity {
 
+    private final String TAG = this.getClass().getName();
+
     DatabaseHelper db;
     Cursor res;
+    ArrayList<User> users;
 
     EditText emailView;
     EditText passwordView;
@@ -27,20 +31,23 @@ public class Login extends AppCompatActivity {
 
         db = new DatabaseHelper(this);
         res = db.getAllData(DatabaseHelper.USER_TABLE);
+        users = new ArrayList<>();
 
-        while (res.moveToNext()) {
-            User user = new User(res.getString(1), res.getString(2));
-            Log.d("tag", "user12345" + user.getEmail() + " " + user.getPassword());
-        }
         emailView = findViewById(R.id.email);
         passwordView = findViewById(R.id.password);
+        while (res.moveToNext()) {
+            User user = new User(res.getString(1), res.getString(2));
+            users.add(user);
+        }
     }
 
     public void login(View view) {
-        while (res.moveToNext()) {
-        User user = new User(res.getString(1), res.getString(2));
-        if (emailView.getText().toString().equals(user.getEmail()) && passwordView.getText().toString().equals(user.getPassword())) {
+        for (User user : users) {
+            if (emailView.getText().toString().equals(user.getEmail()) && passwordView.getText().toString().equals(user.getPassword())) {
                 Intent intent = new Intent(Login.this, Ticket.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", user);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         }

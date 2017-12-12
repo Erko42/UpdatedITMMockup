@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Activities;
+package com.example.eriko.updateditmmockup.activities;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
@@ -20,12 +20,11 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.eriko.updateditmmockup.Classes.Project;
-import com.example.eriko.updateditmmockup.Classes.RESTManager;
-import com.example.eriko.updateditmmockup.Helpers.DatabaseHelper;
-import com.example.eriko.updateditmmockup.Interfaces.CustomerVolleyArrayCallback;
-import com.example.eriko.updateditmmockup.Interfaces.VolleyArrayListCallback;
-import com.example.eriko.updateditmmockup.Interfaces.VolleyJsonObjectCallback;
+import com.example.eriko.updateditmmockup.classes.RESTManager;
+import com.example.eriko.updateditmmockup.helpers.DatabaseHelper;
+import com.example.eriko.updateditmmockup.interfaces.CustomerVolleyArrayCallback;
+import com.example.eriko.updateditmmockup.interfaces.VolleyArrayListCallback;
+import com.example.eriko.updateditmmockup.interfaces.VolleyJsonObjectCallback;
 import com.example.eriko.updateditmmockup.R;
 
 import org.altbeacon.beacon.Beacon;
@@ -45,13 +44,13 @@ import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 
-    protected static final String TAG = "tag";
+    private final String TAG = this.getClass().getName();
+
     public static boolean loggedIn;
     private BeaconManager beaconManager;
 
     DatabaseHelper db;
     HashMap<String, String> hashMap;
-    Project project;
 
     RequestQueue requestQueue;
     RESTManager restmanager;
@@ -89,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
     boolean threeIsSet;
     boolean fourIsSet;
     boolean infoIsPressed;
+    boolean downloadIsPressed;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 
         db = new DatabaseHelper(this);
         hashMap = new HashMap<>();
-        project = new Project();
 
         requestQueue = Volley.newRequestQueue(getApplicationContext());
         restmanager = new RESTManager(this, requestQueue);
@@ -268,15 +267,11 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
                                     @Override
                                     public void onSuccess(JSONObject result) {
                                         try {
-                                            project.setProjectID(Integer.parseInt(result.getString("ProjectID")));
-                                            project.setAppName(result.getString("AppName"));
-                                            project.setCustomerID(Integer.parseInt(result.getString("CustomerID")));
-                                            project.setProjectDuration(result.getString("ProjectDuration"));
                                             hashMap.put("AppName", result.getString("AppName"));
                                             hashMap.put("CustomerID", result.getString("CustomerID"));
                                             hashMap.put("ProjectDuration", result.getString("ProjectDuration"));
                                             hashMap.put("ProjectID", result.getString("ProjectID"));
-                                            readyToDownloadText.setText(project.getAppName() + "\när nu redo för nedladdning");
+                                            readyToDownloadText.setText(hashMap.get("AppName") + "\när nu redo för nedladdning");
                                             constraintLayout.startAnimation(animationslidedown);
                                             theCodeView.setEnabled(false);
                                             theCodeView.setEnabled(true);
@@ -331,29 +326,28 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
             restmanager.getStringFromJsonArrayFromUrl("https://api.itmmobile.com/projects/" + code + "/contents", "BackgroundImg", new VolleyArrayListCallback() {
                 @Override
                 public void onSuccess(ArrayList result) {
-                    project.setBackgroundImg(result.get(0).toString());
-                    hashMap.put("getBackgroundImg", project.getBackgroundImg());
-                    hashMap.put("getHideInMultiApp", project.getHideInMultiApp() + "");
+                    hashMap.put("BackgroundImg", result.get(0).toString());
+                    hashMap.put("HideInMultiApp", 1 + "");
                     progress += 50;
                     update();
                 }
             });
         }
         if (progress == 100 && infoIsPressed) {
-           // db.insertData(project.getAppName(), project.getCustomerID(),
-           //         project.getProjectDuration(), project.getBackgroundImg(),
-           //         project.getHideInMultiApp(), project.getProjectID());
             db.insertData(DatabaseHelper.EVENT_TABLE, hashMap);
             Intent intent = new Intent(MainActivity.this, EventInfobs.class);
+            intent.putExtra("code", code);
+            startActivity(intent);
+        } else if (progress == 100 && downloadIsPressed) {
+            Intent intent = new Intent(MainActivity.this, SplashScreen.class);
             intent.putExtra("code", code);
             startActivity(intent);
         }
     }
 
     public void download(View view) {
-        Intent intent = new Intent(MainActivity.this, SplashScreen.class);
-        intent.putExtra("code", code);
-        startActivity(intent);
+        downloadIsPressed = true;
+        update();
     }
 
     public void info(View view) {
@@ -379,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
             @Override
             public void didEnterRegion(Region region) {
                 try {
-                    MainActivity.loggedIn = true;
+                    loggedIn = true;
                     beaconManager.startRangingBeaconsInRegion(region);
                 } catch (RemoteException e) {
                     e.printStackTrace();

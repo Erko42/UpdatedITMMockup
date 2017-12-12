@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Fragments;
+package com.example.eriko.updateditmmockup.fragments;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,9 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.eriko.updateditmmockup.Adapters.EventListAdapter;
-import com.example.eriko.updateditmmockup.Classes.Project;
-import com.example.eriko.updateditmmockup.Helpers.DatabaseHelper;
+import com.example.eriko.updateditmmockup.adapters.EventListAdapter;
+import com.example.eriko.updateditmmockup.classes.Project;
+import com.example.eriko.updateditmmockup.helpers.DatabaseHelper;
 import com.example.eriko.updateditmmockup.R;
 
 import java.util.ArrayList;
@@ -33,14 +33,14 @@ public class Tab1CurrentEvents extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_tab1_current_events, container, false);
         setHasOptionsMenu(true);
         db = new DatabaseHelper(getContext());
-        res = db.getAllData("Event_table");
+        res = db.getAllData(DatabaseHelper.EVENT_TABLE);
         dbList = new ArrayList<>();
 
         while (res.moveToNext()) {
             Project project = new Project(res.getString(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6));
             dbList.add(project);
         }
-        listView = (ListView)rootView.findViewById(R.id.listView);
+        listView = rootView.findViewById(R.id.listView);
         eventListAdapter = new EventListAdapter(getContext(), dbList);
         listView.setAdapter(eventListAdapter);
 

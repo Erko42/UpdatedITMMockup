@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Interfaces;
+package com.example.eriko.updateditmmockup.interfaces;
 
 public interface VolleyStringCallback {
     void onSuccess(String result);

@@ -1,9 +1,10 @@
-package com.example.eriko.updateditmmockup.Adapters;
+package com.example.eriko.updateditmmockup.adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.eriko.updateditmmockup.Activities.EventInfobs;
-import com.example.eriko.updateditmmockup.Classes.Project;
+import com.example.eriko.updateditmmockup.activities.EventInfobs;
+import com.example.eriko.updateditmmockup.activities.SplashScreen;
+import com.example.eriko.updateditmmockup.classes.Project;
 import com.example.eriko.updateditmmockup.R;
 
 import java.util.ArrayList;
@@ -43,31 +45,41 @@ public class EventListAdapter extends ArrayAdapter {
         return position;
     }
 
+    @NonNull
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.event_item, parent, false);
         }
-        ImageView banner = (ImageView)convertView.findViewById(R.id.banner);
-        ImageView info = (ImageView)convertView.findViewById(R.id.info);
-        ImageView download = (ImageView)convertView.findViewById(R.id.download);
+        ImageView banner = convertView.findViewById(R.id.banner);
+        ImageView info = convertView.findViewById(R.id.info);
+        ImageView download = convertView.findViewById(R.id.download);
 
-        TextView appName = (TextView)convertView.findViewById(R.id.appName);
-        TextView location = (TextView)convertView.findViewById(R.id.location);
-        TextView duration = (TextView)convertView.findViewById(R.id.duration);
+        TextView appName = convertView.findViewById(R.id.appName);
+        TextView location = convertView.findViewById(R.id.location);
+        TextView duration = convertView.findViewById(R.id.duration);
 
         banner.setImageBitmap(stringToBitmap(projectList.get(position).getBackgroundImg()));
         info.setImageResource(R.drawable.info);
         info.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), EventInfobs.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), EventInfobs.class);
                 intent.putExtra("isFromMultiApp", true);
                 intent.putExtra("id", position);
                 context.startActivity(intent);
             }
         });
         download.setImageResource(R.drawable.download);
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), SplashScreen.class);
+                intent.putExtra("isFromMultiApp", true);
+                intent.putExtra("id", position);
+                context.startActivity(intent);
+            }
+        });
 
         appName.setText(projectList.get(position).getAppName());
         location.setText("Location");

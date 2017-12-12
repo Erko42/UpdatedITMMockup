@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Activities;
+package com.example.eriko.updateditmmockup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,13 +9,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
-import com.example.eriko.updateditmmockup.Fragments.Tab1CurrentEvents;
-import com.example.eriko.updateditmmockup.Fragments.Tab2PastEvents;
+import com.example.eriko.updateditmmockup.fragments.Tab1CurrentEvents;
+import com.example.eriko.updateditmmockup.fragments.Tab2PastEvents;
 import com.example.eriko.updateditmmockup.R;
 
 public class ExhibitorListsbs extends AppCompatActivity {
+
+    private final String TAG = this.getClass().getName();
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
@@ -23,16 +25,16 @@ public class ExhibitorListsbs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exhibitor_listsbs);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -88,10 +90,7 @@ public class ExhibitorListsbs extends AppCompatActivity {
             return null;
         }
     }
-    public void downloadDreamforce(View view) {
-        Intent intent = new Intent(this, SplashScreen.class);
-        startActivity(intent);
-    }
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(ExhibitorListsbs.this, MainActivity.class);

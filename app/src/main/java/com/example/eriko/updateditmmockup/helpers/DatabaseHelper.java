@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Helpers;
+package com.example.eriko.updateditmmockup.helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static String USER_TABLE = "User_table";
 
     public DatabaseHelper(Context context) {
-        super(context, "db", null, 2);
+        super(context, "db", null, 7);
     }
      
     @Override

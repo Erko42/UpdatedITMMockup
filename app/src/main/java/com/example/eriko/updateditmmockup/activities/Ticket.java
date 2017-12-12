@@ -1,17 +1,16 @@
-package com.example.eriko.updateditmmockup.Activities;
+package com.example.eriko.updateditmmockup.activities;
 
 import android.Manifest;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.eriko.updateditmmockup.R;
+import com.example.eriko.updateditmmockup.classes.User;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -30,12 +29,11 @@ import java.util.Collection;
 
 public class Ticket extends AppCompatActivity implements BeaconConsumer {
 
+    private final String TAG = this.getClass().getName();
+
     private BeaconManager beaconManager;
+    private User user;
     ImageView imageView;
-    Button button;
-    EditText editText;
-    String EditTextValue;
-    Thread thread;
     public final static int QRcodeWidth = 500;
     Bitmap bitmap;
     @Override
@@ -52,30 +50,13 @@ public class Ticket extends AppCompatActivity implements BeaconConsumer {
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
         beaconManager.bind(this);
 
+        user = (User) getIntent().getSerializableExtra("user");
+
         imageView = findViewById(R.id.imageView);
-        editText = findViewById(R.id.editText);
-        button = findViewById(R.id.button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                EditTextValue = editText.getText().toString();
-
-                try {
-                    bitmap = TextToImageEncode(EditTextValue);
-
-                    imageView.setImageBitmap(bitmap);
-
-                } catch (WriterException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     Bitmap TextToImageEncode(String Value) throws WriterException {
-        Log.d("tag", "Logged in: " + MainActivity.loggedIn);
+        Log.d(TAG, "Logged in: " + MainActivity.loggedIn);
         BitMatrix bitMatrix;
         try {
             bitMatrix = new MultiFormatWriter().encode(
@@ -123,9 +104,7 @@ public class Ticket extends AppCompatActivity implements BeaconConsumer {
                     Ticket.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            EditTextValue = editText.getText().toString();
 
-                  
                         }
                     });
                     beaconManager.startRangingBeaconsInRegion(region);
@@ -160,24 +139,11 @@ public class Ticket extends AppCompatActivity implements BeaconConsumer {
                 Ticket.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (i > 0) {
-                            EditTextValue = editText.getText().toString();
-
-                            try {
-                                bitmap = TextToImageEncode(EditTextValue);
-                                imageView.setImageBitmap(bitmap);
-                            } catch (WriterException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            EditTextValue = editText.getText().toString();
-
-                            try {
-                                bitmap = TextToImageEncode(EditTextValue);
-                                imageView.setImageBitmap(bitmap);
-                            } catch (WriterException e) {
-                                e.printStackTrace();
-                            }
+                        try {
+                            bitmap = TextToImageEncode(user.getEmail());
+                            imageView.setImageBitmap(bitmap);
+                        } catch (WriterException e) {
+                            e.printStackTrace();
                         }
                     }
                 });
@@ -188,7 +154,7 @@ public class Ticket extends AppCompatActivity implements BeaconConsumer {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
                 for(Beacon oneBeacon : beacons) {
-                    Log.d("tag", "distance: " + oneBeacon.getDistance() + " id:" + oneBeacon.getId1() + "/" + oneBeacon.getId2() + "/" + oneBeacon.getId3());
+                    Log.d(TAG, "distance: " + oneBeacon.getDistance() + " id:" + oneBeacon.getId1() + "/" + oneBeacon.getId2() + "/" + oneBeacon.getId3());
                 }
             }
         });

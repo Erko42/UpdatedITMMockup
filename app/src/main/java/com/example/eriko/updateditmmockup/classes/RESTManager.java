@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Classes;
+package com.example.eriko.updateditmmockup.classes;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,10 +11,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.eriko.updateditmmockup.Interfaces.CustomerVolleyArrayCallback;
-import com.example.eriko.updateditmmockup.Interfaces.VolleyArrayListCallback;
-import com.example.eriko.updateditmmockup.Interfaces.VolleyJsonObjectCallback;
-import com.example.eriko.updateditmmockup.Interfaces.VolleyStringCallback;
+import com.example.eriko.updateditmmockup.interfaces.CustomerVolleyArrayCallback;
+import com.example.eriko.updateditmmockup.interfaces.VolleyArrayListCallback;
+import com.example.eriko.updateditmmockup.interfaces.VolleyJsonObjectCallback;
+import com.example.eriko.updateditmmockup.interfaces.VolleyStringCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;

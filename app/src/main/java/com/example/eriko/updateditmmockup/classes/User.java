@@ -1,10 +1,12 @@
-package com.example.eriko.updateditmmockup.Classes;
+package com.example.eriko.updateditmmockup.classes;
+
+import java.io.Serializable;
 
 /**
  * Created by Eriko on 2017-12-07.
  */
 
-public class User {
+public class User implements Serializable{
     private String email;
     private String password;
 

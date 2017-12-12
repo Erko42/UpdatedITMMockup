@@ -1,12 +1,12 @@
-package com.example.eriko.updateditmmockup.Activities;
+package com.example.eriko.updateditmmockup.activities;
 
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.eriko.updateditmmockup.Adapters.CarouselPagerAdapter;
-import com.example.eriko.updateditmmockup.Classes.Project;
-import com.example.eriko.updateditmmockup.Helpers.DatabaseHelper;
+import com.example.eriko.updateditmmockup.adapters.CarouselPagerAdapter;
+import com.example.eriko.updateditmmockup.classes.Project;
+import com.example.eriko.updateditmmockup.helpers.DatabaseHelper;
 import com.example.eriko.updateditmmockup.R;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.Orientation;
@@ -14,6 +14,8 @@ import com.yarolegovich.discretescrollview.Orientation;
 import java.util.ArrayList;
 
 public class MainMenu extends AppCompatActivity {
+
+    private final String TAG = this.getClass().getName();
 
     DatabaseHelper db;
     Cursor res;

@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Activities;
+package com.example.eriko.updateditmmockup.activities;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -13,11 +13,11 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.eriko.updateditmmockup.Classes.Project;
-import com.example.eriko.updateditmmockup.Classes.RESTManager;
-import com.example.eriko.updateditmmockup.Helpers.DatabaseHelper;
-import com.example.eriko.updateditmmockup.Interfaces.VolleyArrayListCallback;
-import com.example.eriko.updateditmmockup.Interfaces.VolleyJsonObjectCallback;
+import com.example.eriko.updateditmmockup.classes.Project;
+import com.example.eriko.updateditmmockup.classes.RESTManager;
+import com.example.eriko.updateditmmockup.helpers.DatabaseHelper;
+import com.example.eriko.updateditmmockup.interfaces.VolleyArrayListCallback;
+import com.example.eriko.updateditmmockup.interfaces.VolleyJsonObjectCallback;
 import com.example.eriko.updateditmmockup.R;
 
 import org.json.JSONException;
@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SplashScreen extends AppCompatActivity {
+
+    private final String TAG = this.getClass().getName();
 
     RequestQueue requestQueue;
     RESTManager restmanager;
@@ -237,7 +239,7 @@ public class SplashScreen extends AppCompatActivity {
         progressView.setText(progressString);
         if (progress == 100 * RESTManager.requests && RESTManager.isMultiApp) {
             db.insertData(DatabaseHelper.EVENT_TABLE, hashMap);
-            Log.d("tag", "project " + listIndex + " | " + dbList.get(listIndex).getAppName()
+            Log.d(TAG, "Project " + listIndex + ": | " + dbList.get(listIndex).getAppName()
                     + " | " + dbList.get(listIndex).getCustomerID() + " | " + dbList.get(listIndex).getProjectDuration()
                     + " | " + dbList.get(listIndex).getHideInMultiApp() + " | " + dbList.get(listIndex).getProjectID()
                     + " | " + "\n");

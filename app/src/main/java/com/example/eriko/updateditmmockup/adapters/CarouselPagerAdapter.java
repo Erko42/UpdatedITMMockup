@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Adapters;
+package com.example.eriko.updateditmmockup.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.eriko.updateditmmockup.Classes.Project;
+import com.example.eriko.updateditmmockup.classes.Project;
 import com.example.eriko.updateditmmockup.R;
 
 import java.util.ArrayList;

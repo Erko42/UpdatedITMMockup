@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Activities;
+package com.example.eriko.updateditmmockup.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,13 +10,16 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.example.eriko.updateditmmockup.Helpers.DatabaseHelper;
-import com.example.eriko.updateditmmockup.Classes.Project;
+import com.example.eriko.updateditmmockup.helpers.DatabaseHelper;
+import com.example.eriko.updateditmmockup.classes.Project;
 import com.example.eriko.updateditmmockup.R;
 
 import java.util.ArrayList;
 
 public class EventInfobs extends AppCompatActivity {
+
+    private final String TAG = this.getClass().getName();
+
     DatabaseHelper db;
     Cursor res;
     ArrayList<Project> dbList;
@@ -29,24 +32,26 @@ public class EventInfobs extends AppCompatActivity {
         setContentView(R.layout.activity_event_infobs);
 
         db = new DatabaseHelper(this);
-        res = db.getAllData("Event_table");
+        res = db.getAllData(DatabaseHelper.EVENT_TABLE);
         dbList = new ArrayList<>();
 
-        banner = (ImageView) findViewById(R.id.banner);
+        banner = findViewById(R.id.banner);
 
         while (res.moveToNext()) {
             Project project = new Project(res.getString(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6));
             dbList.add(project);
-            Log.d("tag", "Project: | " + res.getString(1) + " | " + res.getInt(2) + " | " + res.getString(3) + " | " + res.getInt(5) + " | " + res.getInt(6) + " | " + "\n");
         }
+        for (int i = 0; i < dbList.size(); i++) {
+            Log.d(TAG, "Project " + i + ": | " + dbList.get(i).getAppName() + " | " + dbList.get(i).getCustomerID() + " | " + dbList.get(i).getProjectDuration() + " | " + dbList.get(i).getHideInMultiApp() + " | " + dbList.get(i).getProjectID() + " | " + "\n");
+        }
+
 
         banner.setImageBitmap(stringToBitmap(dbList.get(getIntent().getIntExtra("id", 0)).getBackgroundImg()));
     }
     private Bitmap stringToBitmap(String image) {
         try {
             byte[] encodedByte = Base64.decode(image.getBytes(), Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodedByte, 0, encodedByte.length);
-            return bitmap;
+            return BitmapFactory.decodeByteArray(encodedByte, 0, encodedByte.length);
         } catch (Exception e) {
             e.getMessage();
             return null;

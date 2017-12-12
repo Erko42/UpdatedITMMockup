@@ -1,4 +1,4 @@
-package com.example.eriko.updateditmmockup.Activities;
+package com.example.eriko.updateditmmockup.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.eriko.updateditmmockup.Helpers.DatabaseHelper;
+import com.example.eriko.updateditmmockup.helpers.DatabaseHelper;
 import com.example.eriko.updateditmmockup.R;
 
 import java.util.HashMap;
 
 public class Register extends AppCompatActivity {
+
+    private final String TAG = this.getClass().getName();
 
     DatabaseHelper db;
     HashMap<String, String> hashMap;
