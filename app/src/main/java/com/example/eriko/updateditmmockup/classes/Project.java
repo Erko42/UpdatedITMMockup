@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class Project implements Serializable{
 
-    String AppName;
-    int CustomerID;
-    String ProjectDuration;
-    String BackgroundImg;
-    int HideInMultiApp;
-    int ProjectID;
+    private String AppName;
+    private int CustomerID;
+    private String ProjectDuration;
+    private String BackgroundImg;
+    private int HideInMultiApp;
+    private int ProjectID;
 
     public Project() {
 

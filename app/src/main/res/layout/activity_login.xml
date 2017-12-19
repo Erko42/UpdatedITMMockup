@@ -52,14 +52,13 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/round"
         android:hint="Password"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/notAValidEmailAddress" />
 
     <TextView
         android:id="@+id/changeOrForgot"
@@ -73,7 +72,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/Login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toTopOf="@+id/Login" />
 
     <TextView
         android:id="@+id/Login"
@@ -84,11 +83,33 @@
         android:layout_marginTop="8dp"
         android:background="#00ADCE"
         android:gravity="center"
+        android:onClick="login"
         android:text="Login"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:onClick="login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/changeOrForgot"
+        app:layout_constraintTop_toBottomOf="@+id/notAValidPassword" />
+
+    <TextView
+        android:id="@+id/notAValidEmailAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Invalid Email"
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/email" />
+
+    <TextView
+        android:id="@+id/notAValidPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Invalid Password"
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/password"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 </android.support.constraint.ConstraintLayout>

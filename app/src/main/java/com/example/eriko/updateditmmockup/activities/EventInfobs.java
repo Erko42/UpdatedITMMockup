@@ -44,8 +44,6 @@ public class EventInfobs extends AppCompatActivity {
         for (int i = 0; i < dbList.size(); i++) {
             Log.d(TAG, "Project " + i + ": | " + dbList.get(i).getAppName() + " | " + dbList.get(i).getCustomerID() + " | " + dbList.get(i).getProjectDuration() + " | " + dbList.get(i).getHideInMultiApp() + " | " + dbList.get(i).getProjectID() + " | " + "\n");
         }
-
-
         banner.setImageBitmap(stringToBitmap(dbList.get(getIntent().getIntExtra("id", 0)).getBackgroundImg()));
     }
     private Bitmap stringToBitmap(String image) {

@@ -3,11 +3,12 @@ package com.example.eriko.updateditmmockup.activities;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import com.example.eriko.updateditmmockup.R;
 import com.example.eriko.updateditmmockup.adapters.CarouselPagerAdapter;
 import com.example.eriko.updateditmmockup.classes.Project;
 import com.example.eriko.updateditmmockup.helpers.DatabaseHelper;
-import com.example.eriko.updateditmmockup.R;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.Orientation;
 
@@ -22,11 +23,6 @@ public class MainMenu extends AppCompatActivity {
     ArrayList<Project> dbList;
 
     CarouselPagerAdapter carouselPagerAdapter;
-    /**
-     * You shouldn't define first page = 0.
-     * Let define firstpage = 'number viewpager size' to make endless carousel
-     */
-    public static int FIRST_PAGE = 10;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,10 +30,11 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         db = new DatabaseHelper(this);
-        res = db.getAllData("Event_table");
+        res = db.getAllData(DatabaseHelper.EVENT_TABLE);
         dbList = new ArrayList<>();
 
         while (res.moveToNext()) {
+            Log.d(TAG, "test");
             Project project = new Project(res.getString(1), res.getInt(2), res.getString(3), res.getString(4), res.getInt(5), res.getInt(6));
             dbList.add(project);
         }

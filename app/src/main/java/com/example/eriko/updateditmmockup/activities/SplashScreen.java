@@ -72,7 +72,7 @@ public class SplashScreen extends AppCompatActivity {
         projectIndex = 0;
         requestsPerProject = 0;
 
-        code = getIntent().getExtras().getInt("code", 0);
+        code = getIntent().getIntExtra("code", 0);
         exHibitorListsbsIsDownloaded = false;
         mainMenuIsDownloaded = false;
 
@@ -86,6 +86,7 @@ public class SplashScreen extends AppCompatActivity {
         metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
+        //starts the flashy loading animation with a duration of 1 second
         downloadingDataView.post(new Runnable() {
             @Override
             public void run() {
@@ -123,7 +124,7 @@ public class SplashScreen extends AppCompatActivity {
         });
         updateRequests();
     }
-
+    //downloads 1 event at a time if the code equals a customerId until all the events are downloaded
     public void updateRequests() {
         if (RESTManager.isMultiApp) {
             restmanager.getStringFromJsonArrayFromUrl("https://api.itmmobile.com/customers/" + code + "/projects", "HideInMultiApp", new VolleyArrayListCallback() {
@@ -135,6 +136,7 @@ public class SplashScreen extends AppCompatActivity {
                             if(result.get(i).equals("false")) {
                                 project = new Project();
                                 project.setHideInMultiApp(0);
+                                hashMap.put("HideInMultiApp", project.getHideInMultiApp() + "");
                                 dbList.add(project);
                                 RESTManager.projects += 1;
                             } else {
@@ -217,8 +219,8 @@ public class SplashScreen extends AppCompatActivity {
                     @Override
                     public void onSuccess(ArrayList result) {
                         dbList.get(listIndex).setBackgroundImg(result.get(0).toString());
-                        hashMap.put("getBackgroundImg", project.getBackgroundImg());
-                        hashMap.put("getHideInMultiApp", project.getHideInMultiApp() + "");
+                        hashMap.put("BackgroundImg", project.getBackgroundImg());
+                        hashMap.put("HideInMultiApp", project.getHideInMultiApp() + "");
                         update();
                     }
                 });
@@ -231,12 +233,13 @@ public class SplashScreen extends AppCompatActivity {
             }
         }
     }
-
+    //Updates the progressbar and checks the current progress
     public void update() {
         progress += 100;
         progressBar.setProgress(progress / (RESTManager.projects * requestsPerProject));
         progressString = progress / (RESTManager.projects * requestsPerProject) + " %";
         progressView.setText(progressString);
+
         if (progress == 100 * RESTManager.requests && RESTManager.isMultiApp) {
             db.insertData(DatabaseHelper.EVENT_TABLE, hashMap);
             Log.d(TAG, "Project " + listIndex + ": | " + dbList.get(listIndex).getAppName()
@@ -255,9 +258,6 @@ public class SplashScreen extends AppCompatActivity {
                 updateRequests();
             }
         } else if (progress == 100 * RESTManager.requests && !RESTManager.isMultiApp) {
-           // db.insertData(dbList.get(listIndex).getAppName(), dbList.get(listIndex).getCustomerID(),
-           //         dbList.get(listIndex).getProjectDuration(), dbList.get(listIndex).getBackgroundImg(),
-           //         dbList.get(listIndex).getHideInMultiApp(), dbList.get(listIndex).getProjectID());
             db.insertData(DatabaseHelper.EVENT_TABLE, hashMap);
             Intent intent = new Intent(SplashScreen.this, RegisterAndLogin.class);
             intent.putExtra("code", code);

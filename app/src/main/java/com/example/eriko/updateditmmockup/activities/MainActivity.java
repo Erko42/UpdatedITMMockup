@@ -20,12 +20,12 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.eriko.updateditmmockup.R;
 import com.example.eriko.updateditmmockup.classes.RESTManager;
 import com.example.eriko.updateditmmockup.helpers.DatabaseHelper;
 import com.example.eriko.updateditmmockup.interfaces.CustomerVolleyArrayCallback;
 import com.example.eriko.updateditmmockup.interfaces.VolleyArrayListCallback;
 import com.example.eriko.updateditmmockup.interfaces.VolleyJsonObjectCallback;
-import com.example.eriko.updateditmmockup.R;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 
     private final String TAG = this.getClass().getName();
 
-    public static boolean loggedIn;
+    public static boolean checkedIn;
     private BeaconManager beaconManager;
 
     DatabaseHelper db;
@@ -98,13 +98,11 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
         beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.bind(this);
         requestPermissions(new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, 1234);
-        // To detect proprietary beacons, you must add a line like below corresponding to your beacon
-        // type.  Do a web search for "setBeaconLayout" to get the proper expression.
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
         beaconManager.bind(this);
 
-        loggedIn = false;
+        checkedIn = false;
 
         db = new DatabaseHelper(this);
         hashMap = new HashMap<>();
@@ -208,7 +206,9 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
             }
         });
 
+
         theCodeView.addTextChangedListener(new TextWatcher() {
+            //checks how many digits the user have inserted to show the animation below every digit
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if(!theCodeView.getText().toString().equals("")) {
@@ -227,6 +227,8 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
                     fourIsSet = false;
                 }
             }
+
+            // checks and starts the animations below the digits
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(!theCodeView.getText().toString().equals("")) {
@@ -248,6 +250,9 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
                     animToWhite4.start();
                     fourIsSet = true;
                 }
+
+                // if all 4 digits is inserted the API calls to the server to get the necesary info from that Project
+                // if it is a CustomerId go to the SplashScreen and download all the events for that CustomerId
                 if (theCodeView.getText().toString().length() == 4) {
                     try {
                         restmanager.getCustomerStringFromJsonArrayFromUrl("https://api.itmmobile.com/customers/" + code + "/projects", "ProjectID", new CustomerVolleyArrayCallback() {
@@ -271,7 +276,9 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
                                             hashMap.put("CustomerID", result.getString("CustomerID"));
                                             hashMap.put("ProjectDuration", result.getString("ProjectDuration"));
                                             hashMap.put("ProjectID", result.getString("ProjectID"));
-                                            readyToDownloadText.setText(hashMap.get("AppName") + "\när nu redo för nedladdning");
+                                            hashMap.put("HideInMultiApp", 1 + "");
+                                            String readyToDownloadtext = hashMap.get("AppName") + "\när nu redo för nedladdning";
+                                            readyToDownloadText.setText(readyToDownloadtext);
                                             constraintLayout.startAnimation(animationslidedown);
                                             theCodeView.setEnabled(false);
                                             theCodeView.setEnabled(true);
@@ -321,13 +328,13 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
         });
     }
 
+    // downloads the BackgroundImg from the server and checks the download proccess
     public void update() {
         if (progress == 50){
             restmanager.getStringFromJsonArrayFromUrl("https://api.itmmobile.com/projects/" + code + "/contents", "BackgroundImg", new VolleyArrayListCallback() {
                 @Override
                 public void onSuccess(ArrayList result) {
                     hashMap.put("BackgroundImg", result.get(0).toString());
-                    hashMap.put("HideInMultiApp", 1 + "");
                     progress += 50;
                     update();
                 }
@@ -366,14 +373,15 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
         beaconManager.unbind(this);
     }
 
+    //AltBeacon sdk beacon connect service
     public void onBeaconServiceConnect() {
-        final Region region1 = new Region ("beacon", Identifier.parse("6e42f68a-d0d1-467b-a23e-9d11fa746e43"), Identifier.parse("0160"), Identifier.parse("0106"));
+        final Region region1 = new Region ("beacon1", Identifier.parse("6e42f68a-d0d1-467b-a23e-9d11fa746e43"), Identifier.parse("0160"), Identifier.parse("0106"));
 
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
                 try {
-                    loggedIn = true;
+                    checkedIn = true;
                     beaconManager.startRangingBeaconsInRegion(region);
                 } catch (RemoteException e) {
                     e.printStackTrace();
@@ -399,29 +407,22 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
             public void didDetermineStateForRegion(final int i, Region region) {
                 try {
                     if (i > 0) {
-                        loggedIn = true;
+                        checkedIn = true;
                     } else {
-                        loggedIn = false;
+                        checkedIn = false;
                     }
                     beaconManager.stopRangingBeaconsInRegion(region);
                 } catch (RemoteException e){
                     e.printStackTrace();
                 }
-
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
             }
         });
 
         beaconManager.addRangeNotifier(new RangeNotifier() {
             @Override
             public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-                for(Beacon oneBeacon : beacons) {
-                    Log.d(TAG, "distance: " + oneBeacon.getDistance() + " id:" + oneBeacon.getId1() + "/" + oneBeacon.getId2() + "/" + oneBeacon.getId3());
+                for(Beacon beacon : beacons) {
+                    Log.d(TAG, "distance: " + beacon.getDistance() + " id:" + beacon.getId1() + "/" + beacon.getId2() + "/" + beacon.getId3());
                 }
             }
         });

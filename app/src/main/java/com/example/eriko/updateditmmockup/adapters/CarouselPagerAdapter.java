@@ -7,14 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.eriko.updateditmmockup.classes.Project;
+import com.bumptech.glide.Glide;
 import com.example.eriko.updateditmmockup.R;
+import com.example.eriko.updateditmmockup.classes.Project;
 
 import java.util.ArrayList;
 
 public class CarouselPagerAdapter extends RecyclerView.Adapter<CarouselPagerAdapter.ViewHolder> {
 
-    Context context;
+    private Context context;
     private ArrayList<Project> data;
 
     public CarouselPagerAdapter(Context context, ArrayList<Project> data) {
@@ -25,15 +26,15 @@ public class CarouselPagerAdapter extends RecyclerView.Adapter<CarouselPagerAdap
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.event_item, parent, false);
-        return new ViewHolder(v);
+        View view = inflater.inflate(R.layout.event_item, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-       // Glide.with(holder.itemView.getContext())
-        //        .load(data.get(position).getBackgroundImg())
-       //         .into(holder.image);
+        Glide.with(holder.itemView.getContext())
+                .load(data.get(position).getBackgroundImg())
+                .into(holder.image);
     }
 
     @Override
@@ -45,9 +46,9 @@ public class CarouselPagerAdapter extends RecyclerView.Adapter<CarouselPagerAdap
 
         private ImageView image;
 
-        public ViewHolder(View itemView) {
+        private ViewHolder(View itemView) {
             super(itemView);
-            //image = (ImageView) itemView.findViewById(R.id.banner);
+            image = itemView.findViewById(R.id.banner);
         }
     }
 }

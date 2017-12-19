@@ -43,6 +43,7 @@ public class ExhibitorListsbs extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
+
         }
 
         public static PlaceholderFragment newInstance(int sectionNumber) {

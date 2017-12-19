@@ -5,4 +5,13 @@
     <string name="title_activity_exhibitor_listsbs">ExhibitorListsbs</string>
     <string name="download_data_text">Downloading Data...</string>
     <string name="it_may_take_a_while">It may take a while to\ndownload all the information</string>
+    <string name="ticket_is_valid">Ticket is Valid</string>
+    <string name="ticket_is_invalid">Ticket is Invalid</string>
+    <string name="prepaid_ticket">PREPAID TICKET</string>
+    <string name="worth">WORTH 70 KR</string>
+    <string name="not_checked_in">You are not yet checked in!</string>
+    <string name="checked_in">Your presence is registered!</string>
+    <string name="info_invalid">Turn on bluetooth and location services.\nDoesn\'t work? Scan the QR code below\nat the help desk.</string>
+    <string name="info_valid">Show this ticket for the guards and go in to\nthe exhibition. Do not block the entrance,\nwait for your friends after the checkout.</string>
+    <string name="click_on_the_ticket">Click on the ticket to go to the main menu</string>
 </resources>

@@ -7,4 +7,5 @@
     <color name="orange2">#FFD69E</color>
     <color name="red">#FF5252</color>
     <color name="green">#7DFF52</color>
+    <color name="QRCodeBackground">#c9f7ff</color>
 </resources>

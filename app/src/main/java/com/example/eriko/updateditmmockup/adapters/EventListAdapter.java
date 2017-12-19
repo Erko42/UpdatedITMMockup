@@ -13,10 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.eriko.updateditmmockup.activities.EventInfobs;
-import com.example.eriko.updateditmmockup.activities.SplashScreen;
-import com.example.eriko.updateditmmockup.classes.Project;
 import com.example.eriko.updateditmmockup.R;
+import com.example.eriko.updateditmmockup.activities.EventInfobs;
+import com.example.eriko.updateditmmockup.activities.RegisterAndLogin;
+import com.example.eriko.updateditmmockup.classes.Project;
 
 import java.util.ArrayList;
 
@@ -74,7 +74,7 @@ public class EventListAdapter extends ArrayAdapter {
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), SplashScreen.class);
+                Intent intent = new Intent(view.getContext(), RegisterAndLogin.class);
                 intent.putExtra("isFromMultiApp", true);
                 intent.putExtra("id", position);
                 context.startActivity(intent);

@@ -29,7 +29,12 @@ public class RegisterAndLogin extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(RegisterAndLogin.this, MainActivity.class);
-        startActivity(intent);
+        if (getIntent().getBooleanExtra("isFromMultiApp", false)) {
+            Intent intent = new Intent(RegisterAndLogin.this, ExhibitorListsbs.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(RegisterAndLogin.this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 }

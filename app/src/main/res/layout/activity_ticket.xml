@@ -8,16 +8,148 @@
     android:background="@color/mediumblack">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ticket"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="56dp"
+        android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ticket_is_invalid" />
+
+    <ImageView
+        android:id="@+id/QRCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clickOnTheTicket" />
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Saco Studentmässa"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/prepaidTicket"
+        app:layout_constraintTop_toBottomOf="@+id/prepaidTicket" />
+
+    <TextView
+        android:id="@+id/validOrInvalid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Ticket is Invalid"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#DEDEDE"
+        app:layout_constraintBottom_toBottomOf="@+id/ticket"
+        app:layout_constraintEnd_toEndOf="@+id/ticket"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/ticket" />
+
+    <TextView
+        android:id="@+id/prepaidTicket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="128dp"
+        android:layout_marginTop="80dp"
+        android:text="PREPAID TICKET"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/worth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="WORTH 70 KR"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/prepaidTicket"
+        app:layout_constraintStart_toEndOf="@+id/prepaidTicket"
+        app:layout_constraintTop_toTopOf="@+id/prepaidTicket" />
+
+    <TextView
+        android:id="@+id/checkedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="You are not yet checked in!"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/header"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    <TextView
+        android:id="@+id/turnOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TURN ON"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/checkedIn"
+        app:layout_constraintTop_toBottomOf="@+id/checkedIn" />
+
+    <ImageView
+        android:id="@+id/bluetooth"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="@+id/turnOn"
+        app:layout_constraintStart_toEndOf="@+id/turnOn"
+        app:layout_constraintTop_toTopOf="@+id/turnOn"
+        app:srcCompat="@drawable/bluetooth" />
+
+    <ImageView
+        android:id="@+id/location"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="@+id/turnOn"
+        app:layout_constraintStart_toEndOf="@+id/bluetooth"
+        app:layout_constraintTop_toTopOf="@+id/turnOn"
+        app:srcCompat="@drawable/plats" />
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Turn on bluetooth, internet and location.\nDoesn't work? Scan the QR code below\nat the help desk"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/turnOn"
+        app:layout_constraintTop_toBottomOf="@+id/turnOn" />
+
+    <TextView
+        android:id="@+id/clickOnTheTicket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/click_on_the_ticket"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/info"
+        app:layout_constraintTop_toBottomOf="@+id/info" />
+
 </android.support.constraint.ConstraintLayout>
